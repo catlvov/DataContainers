@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 using namespace std;
 using std::cin;
 using std::cout;
@@ -18,12 +19,17 @@ public:
 		this->Data = Data;
 		this->pNext = pNext;
 		count++;
+#ifdef DEBUG
 		cout << "EContructor:\t" << this << endl;
+#endif // DEBUG
+
 	}
 	~Element()
 	{
 		count--;
+#ifdef DEBUG
 		cout << "EDestructor\t" << this << endl;
+#endif // DEBUG
 	}
 	friend class ForwardList;
 };
@@ -41,7 +47,7 @@ public:
 		size = 0;
 		cout << "Lconstructor:\t" << this << endl;
 	}
-	ForwardList(const ForwardList& other)
+	ForwardList(const ForwardList& other):ForwardList()
 	{
 		/*Element* Temp = other.Head;
 		while (Temp)
@@ -49,8 +55,10 @@ public:
 			push_back(Temp->Data);
 			Temp = Temp->pNext;
 		}*/
-		for (Element* Temp = other.Head; Temp; Temp = Temp->pNext)
-			push_back(Temp->Data);
+		/*for (Element* Temp = other.Head; Temp; Temp = Temp->pNext)
+			push_front(Temp->Data);
+		reverse();*/
+		*this = other;
 		cout << "CopyConstructor:\t" << this << endl;
 	}
 	~ForwardList()
@@ -62,8 +70,8 @@ public:
 	ForwardList& operator = (const ForwardList& other)
 	{
 		while (Head)pop_front();
-		for (Element* Temp = other.Head; Temp; Temp = Temp->pNext)
-		push_back(Temp->Data);
+		for (Element* Temp = other.Head; Temp; Temp = Temp->pNext)push_front(Temp->Data);
+		reverse();
 		return *this;
 	}
 	//	adding elements:
@@ -128,7 +136,7 @@ public:
 		delete Temp;
 		size--;
 	}
-	//	metgods:
+	//	methods:
 	void print()const
 	{
 		Element* temp = Head;
@@ -139,9 +147,22 @@ public:
 		} 
 		cout << "Size list: " << size << endl ;
 	}
+
+	void reverse()
+	{
+		ForwardList buf;
+		while (Head)
+		{
+			buf.push_front(Head->Data);
+			&pop_front;
+		}
+		Head = buf.Head;
+		buf.Head = nullptr;
+	}
 };
 
-#define BASE_CHECK
+//#define BASE_CHECK
+//#define COPY_METHODS_CHECK
 //#define MULTIPLE_LISTS
 
 void main()
@@ -151,26 +172,39 @@ void main()
 
 	int listSize;
 	cout << "Int size list: "; cin >> listSize;
+	clock_t start = clock();
 	ForwardList list;
 	for (int i = 0; i < listSize; i++)
 	{
-		list.push_back(rand() % 100);
+		list.push_front(rand() % 100);
 	}
-	list.print();
-	/*list.push_back(123);
-	list.print();*/
-	/*list.pop_front();
-	list.print();*/
-	/*list.pop_back();
-	list.print();*//*
-	int index, value;
-	cout << ""; cin >> index;
-	cout << ""; cin >> value;
-	list.insert(value, index);
-	list.print();*/
+
+	clock_t end = clock();
+	////list.print();
+	///*list.push_back(123);
+	//list.print();*/
+	///*list.pop_front();
+	//list.print();*/
+	///*list.pop_back();
+	//list.print();*//*
+	//int index, value;
+	//cout << ""; cin >> index;
+	//cout << ""; cin >> value;
+	//list.insert(value, index);
+	//list.print();*/
+	cout << "Create list complite" << endl;
+	cout << "time spent on creation:\t" << double(end-start)/CLOCKS_PER_SEC << "\t" << endl;
 #endif
-	ForwardList list2 ;
-	list2 = list;
+#ifdef COPY_METHODS_CHECK
+	system("PAUSE");
+	start = clock();
+	ForwardList list2;
+	//list2 = list;
+	list2.print();
+	end = clock();
+	cout << "copy list" << "time spent on copied:\t" << double(end - start) / CLOCKS_PER_SEC << endl;
+#endif 
+
 #ifdef MULTIPLE_LISTS
 	ForwardList list1;
 	list1.push_back(1);
