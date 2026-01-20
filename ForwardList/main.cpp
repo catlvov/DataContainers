@@ -41,9 +41,30 @@ public:
 		size = 0;
 		cout << "Lconstructor:\t" << this << endl;
 	}
+	ForwardList(const ForwardList& other)
+	{
+		/*Element* Temp = other.Head;
+		while (Temp)
+		{
+			push_back(Temp->Data);
+			Temp = Temp->pNext;
+		}*/
+		for (Element* Temp = other.Head; Temp; Temp = Temp->pNext)
+			push_back(Temp->Data);
+		cout << "CopyConstructor:\t" << this << endl;
+	}
 	~ForwardList()
 	{
+		while (Head)pop_front();
 		cout << "Ldeconstructor:\t" << this << endl;
+	}
+	// opertors;
+	ForwardList& operator = (const ForwardList& other)
+	{
+		while (Head)pop_front();
+		for (Element* Temp = other.Head; Temp; Temp = Temp->pNext)
+		push_back(Temp->Data);
+		return *this;
 	}
 	//	adding elements:
 	void push_front(int Data)
@@ -148,6 +169,8 @@ void main()
 	list.insert(value, index);
 	list.print();*/
 #endif
+	ForwardList list2 ;
+	list2 = list;
 #ifdef MULTIPLE_LISTS
 	ForwardList list1;
 	list1.push_back(1);
