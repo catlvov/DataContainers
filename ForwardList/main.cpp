@@ -29,18 +29,70 @@ public:
 		count--;
 #ifdef DEBUG
 		cout << "EDestructor\t" << this << endl;
-#endif // DEBUG
+#endif //DEBUG
 	}
 	friend class ForwardList;
+	friend class Iterator;
 };
 
 int Element::count = 0;
+
+class Iterator
+{
+	Element* Temp;
+public:
+	Iterator(Element* Temp = nullptr) : Temp(Temp)
+	{
+		cout << "ItConstructor:\t" << this << endl;
+	}
+	~Iterator()
+	{
+		cout << "ItDesctructor:\t" << this << endl;
+	}
+	//	operators:
+	Iterator& operator ++()
+	{
+		Temp = Temp->pNext;
+		return *this;
+	}
+	
+	bool operator ==(const Iterator& other) const
+	{
+		return this->Temp == other.Temp;
+	}
+	bool operator !=(const Iterator& other) const
+	{
+		return this->Temp != other.Temp;
+	}
+
+	int& operator*()
+	{
+		return Temp->Data;
+
+	}
+	const int& operator*() const
+	{
+		return Temp->Data;
+	}
+	int& operator*()
+	{
+		return Temp->Data;
+	}
+};
 
 class ForwardList
 {
 	Element* Head;
 	int size;
 public:
+	Iterator begin()
+	{
+		return Head;
+	}
+	Iterator end()
+	{
+		return nullptr;
+	}
 	ForwardList()
 	{
 		Head = nullptr;
@@ -60,6 +112,16 @@ public:
 		reverse();*/
 		*this = other;
 		cout << "CopyConstructor:\t" << this << endl;
+	}
+	ForwardList(const std::initializer_list<int>& il) :ForwardList()
+	{
+		//initializer_list - это контейнер
+		//Контейнер - это обект который рганизует хранение других объектов в памяти
+		//у любого контейнера есть методы begin() и end()
+		//begin() - возвращает оператор на начало контейнера
+		//end() - возвращает итератор на конец контейнера
+			for (int const* it = il.begin(); it != il.end(); it++)
+			push_back(*it);
 	}
 	~ForwardList()
 	{
@@ -154,7 +216,7 @@ public:
 		while (Head)
 		{
 			buf.push_front(Head->Data);
-			&pop_front;
+			/*&pop_front;*/
 		}
 		Head = buf.Head;
 		buf.Head = nullptr;
@@ -164,6 +226,7 @@ public:
 //#define BASE_CHECK
 //#define COPY_METHODS_CHECK
 //#define MULTIPLE_LISTS
+//#define RANGE_BASED_FOR_ARRAY
 
 void main()
 {
@@ -195,6 +258,7 @@ void main()
 	cout << "Create list complite" << endl;
 	cout << "time spent on creation:\t" << double(end-start)/CLOCKS_PER_SEC << "\t" << endl;
 #endif
+
 #ifdef COPY_METHODS_CHECK
 	system("PAUSE");
 	start = clock();
@@ -223,4 +287,21 @@ void main()
 	list2.push_back(12);
 	list2.print();
 #endif
+
+#ifdef RANGE_BASED_FOR_ARRAY
+	int arr[] = { 3,5,8,13,21 };
+	for (int i : arr)
+	{
+		cout << i << tab;
+	}
+	cout << endl;
+#endif // RANGE_BASED_FOR_ARRAY
+
+	ForwardList list = { 3,5,8,13,21 };
+	//list.print();
+	for (int i : list)
+	{
+		cout << i << tab;
+	}
+	cout << endl;
 }
