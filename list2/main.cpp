@@ -1,4 +1,4 @@
-#include <iostream>
+п»ї#include <iostream>
 #include <initializer_list>
 using std::cin;
 using std::cout;
@@ -11,7 +11,7 @@ using std::endl;
 
 class List
 {
-    //Объявлен в пространстве имен класса 'List'
+    //РћР±СЉСЏРІР»РµРЅ РІ РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРµ РёРјРµРЅ РєР»Р°СЃСЃР° 'List'
     class Element
     {
         int Data;
@@ -270,7 +270,7 @@ public:
         cout << delimiter;
         for (Element* Temp = Head; Temp; Temp = Temp->pNext)
             cout << Temp->pPrev << tab << Temp << tab << Temp->Data << tab << Temp->pNext << endl;
-        cout << "Количество элементов списка: " << size << endl;
+        cout << "РљРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ СЃРїРёСЃРєР°: " << size << endl;
         cout << delimiter;
     }
 
@@ -279,7 +279,7 @@ public:
         cout << delimiter;
         for (Element* Temp = Tail; Temp; Temp = Temp->pPrev)
             cout << Temp->pPrev << tab << Temp << tab << Temp->Data << tab << Temp->pNext << endl;
-        cout << "Количество элементов списка: " << size << endl;
+        cout << "РљРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ СЃРїРёСЃРєР°: " << size << endl;
         cout << delimiter;
     }
 
@@ -294,7 +294,7 @@ int main()
 
 #ifdef BASE_CHECK
     int n;
-    cout << "Введите количество элементов списка: "; cin >> n;
+    cout << "Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ СЃРїРёСЃРєР°: "; cin >> n;
     List list;
     for (int i = 0; i < n; i++)
     {
@@ -306,56 +306,56 @@ int main()
 
     int index;
     int value;
-    cout << "Введите индекс добавляемого элемента: "; cin >> index;
-    cout << "Введите значение добавляемого элемента: "; cin >> value;
+    cout << "Р’РІРµРґРёС‚Рµ РёРЅРґРµРєСЃ РґРѕР±Р°РІР»СЏРµРјРѕРіРѕ СЌР»РµРјРµРЅС‚Р°: "; cin >> index;
+    cout << "Р’РІРµРґРёС‚Рµ Р·РЅР°С‡РµРЅРёРµ РґРѕР±Р°РІР»СЏРµРјРѕРіРѕ СЌР»РµРјРµРЅС‚Р°: "; cin >> value;
     list.Insert(value, index);
     list.print();
     list.reverse_print();
 
 #endif // BASE_CHECK
 
-    cout << "=== Тестирование списка ===" << endl;
+    cout << "=== РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ СЃРїРёСЃРєР° ===" << endl;
 
     // 1.  initializer_list
     List list = { 3,5,8,13,21 };
-    cout << "\n1. Созданный список:" << endl;
+    cout << "\n1. РЎРѕР·РґР°РЅРЅС‹Р№ СЃРїРёСЃРѕРє:" << endl;
     list.print();
 
-    // 2. Тестирование прямого итератора
-    cout << "\n2. Вывод через прямой итератор:" << endl;
+    // 2. РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ РїСЂСЏРјРѕРіРѕ РёС‚РµСЂР°С‚РѕСЂР°
+    cout << "\n2. Р’С‹РІРѕРґ С‡РµСЂРµР· РїСЂСЏРјРѕР№ РёС‚РµСЂР°С‚РѕСЂ:" << endl;
     for (int i : list) cout << i << tab;
     cout << endl;
 
-    // 3. Тестирование обратного итератора
-    cout << "\n3. Вывод через обратный итератор:" << endl;
+    // 3. РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ РѕР±СЂР°С‚РЅРѕРіРѕ РёС‚РµСЂР°С‚РѕСЂР°
+    cout << "\n3. Р’С‹РІРѕРґ С‡РµСЂРµР· РѕР±СЂР°С‚РЅС‹Р№ РёС‚РµСЂР°С‚РѕСЂ:" << endl;
     for (List::ReverseIterator rit = list.rbegin(); rit != list.rend(); ++rit)
         cout << *rit << tab;
     cout << endl;
 
     // 4. Insert
-    cout << "\n4. После Insert(100, 2):" << endl;
+    cout << "\n4. РџРѕСЃР»Рµ Insert(100, 2):" << endl;
     list.Insert(100, 2);
     list.print();
 
     // 5. Erase
-    cout << "\n5. После Erase(3):" << endl;
+    cout << "\n5. РџРѕСЃР»Рµ Erase(3):" << endl;
     list.Erase(3);
     list.print();
 
     // 6.  pop_front  pop_back
-    cout << "\n6. После pop_front() и pop_back():" << endl;
+    cout << "\n6. РџРѕСЃР»Рµ pop_front() Рё pop_back():" << endl;
     list.pop_front();
     list.pop_back();
     list.print();
 
     // 7. push_front  push_back
-    cout << "\n7. После push_front(999) и push_back(777):" << endl;
+    cout << "\n7. РџРѕСЃР»Рµ push_front(999) Рё push_back(777):" << endl;
     list.push_front(999);
     list.push_back(777);
     list.print();
 
     // 8. range-based
-    cout << "\n8. Вывод через range-based for loop:" << endl;
+    cout << "\n8. Р’С‹РІРѕРґ С‡РµСЂРµР· range-based for loop:" << endl;
     for (int i : list) cout << i << tab;
     cout << endl;
 
